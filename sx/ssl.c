@@ -41,7 +41,7 @@ static int _sx_ssl_verify_callback(int preverify_ok, X509_STORE_CTX *ctx)
     /*
      * Ignore errors when we can't get CRLs in the certificate
      */
-    if (!preverify_ok && err == X509_V_ERR_UNABLE_TO_GET_CRL) {
+    if (!preverify_ok && ((err == X509_V_ERR_UNABLE_TO_GET_CRL)  || (err == X509_V_ERR_INVALID_PURPOSE)) ) {
     	_sx_debug(ZONE, "ignoring verify error:num=%d:%s:depth=%d:%s\n", err,
     	                 X509_verify_cert_error_string(err), depth, buf);
     	preverify_ok = 1;
